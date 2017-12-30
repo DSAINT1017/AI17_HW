@@ -4,8 +4,10 @@ import time
 
 Checkers = []
 
+index = 0
 for pos in agentStartPos :
-    Checkers.append( Check( pos ) )
+    Checkers.append( Check( pos, pos, 'Checker %s' % str(index) ) )
+    index += 1
 
 def nowPositions( checkerPositions ) :
     hasCheck = [False] * len( legalPos )
@@ -16,9 +18,6 @@ def nowPositions( checkerPositions ) :
 
 hasCheck = nowPositions( agentStartPos )
 
-# xscale=30;
-# yscale=40;
-# radius=15;
 def add( x, y ) :
     return [ x[0]+y[0], x[1]+y[1] ]
 
@@ -65,9 +64,8 @@ def selectChecker() :
 def moveChecker( checker ) :
     for i in range( len(agentFinalPos) ) :
         if not hasCheck[ legalPos.index( agentFinalPos[i] ) ] and not checker.isEnded():
-            print()
-            print( agentFinalPos[i] )
-            print( 'Before', checker, '\n' )
+            print( 'Destination:', agentFinalPos[i] )
+            print( 'Before Move Next:', checker, '\n' )
 
             moveCheck = []
             vectorFinal = minus( agentFinalPos[i], checker.pos )
@@ -82,7 +80,7 @@ def moveChecker( checker ) :
             checker.move( moveCheck[0] )
             setMoveable()
             hasCheck[ legalPos.index( checker.pos ) ] = True
-            print( 'After', checker )
+            print( 'After Moving:', checker )
             print( '-----------------------------------------' )
 
             if checker.pos == agentFinalPos[i] :
@@ -95,24 +93,24 @@ def checkersIsFinished() :
 
 def testChecker() :
     for item in Checkers :
-        print( item )
+        print( item.printout() )
 
 
 if __name__ == '__main__':
 
-    # testCheck = [12, 16]
-    # print( getMoveSpace( testCheck, hasCheck ) )
     setMoveable()
     with open( 'status.txt', 'w+', encoding='UTF-8' ) as f :
         f.writelines( str( hasCheck ) + '\n' )
+        count = 0
         while not checkersIsFinished() :
             moveChecker( selectChecker() )
             time.sleep( 0.2 )
+            count += 1
 
         f.writelines( '--------------------------------\n' )
         f.writelines( str( hasCheck ) + '\n' )
 
-
+    print( 'Total move:', str( count ) )
     print("")
     testChecker()
 

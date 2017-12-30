@@ -43,11 +43,12 @@ actionMoves = [[1,1], [1,-1], [-1,1], [-1,-1], [2,0], [-2,0]]
 # available hop
 actionHops = [[2,2], [2,-2], [-2,2], [-2,-2], [4,0], [-4,0]]
 
-print( agentFinalPos )
 class Check():
 
-    def __init__(self, pos):
+    def __init__(self, pos, initPos, name):
         self.pos = pos
+        self.initPos = initPos
+        self.name = name
         self.moveable = False
         self.ended = False
 
@@ -70,8 +71,10 @@ class Check():
         return self.ended
 
     def __str__(self) :
-        return "Check at " + str( self.pos )
-        # + '\tisMoveable=' + str( self.moveable )
+        return '%s at %s' % ( self.name, str( self.pos ) )
+
+    def printout(self) :
+        return "%s Move From %s to %s." % ( self.name, str( self.initPos ), str( self.pos ) )
 
 
 
