@@ -1,3 +1,4 @@
+
 legalPos = [                                                [13, 1],
                                                         [12, 2],[14, 2],
                                                     [11, 3],[13, 3],[15, 3],
@@ -17,15 +18,44 @@ legalPos = [                                                [13, 1],
                                                             [13,17]
             ]
 
+# start position
+agentStartPos = [
+                    [9,13],  [11,13], [13,13], [15,13], [17,13],
+                    [10,14], [12,14], [14,14], [16,14],
+                    [11,15], [13,15], [15,15],
+                    [12,16], [14,16],
+                    [13,17]
+                ]
 
+# final position 2
+agentFinalPos = [
+                    [1,5], [3,5], [5,5], [7,5], [9,5],
+                    [2,6], [4,6], [6,6], [8,6],
+                    [3,7], [5,7], [7,7],
+                    [4,8], [6,8],
+                    [5,9]
+                ]
+
+
+# available movement
+actionMoves = [[1,1], [1,-1], [-1,1], [-1,-1], [2,0], [-2,0]]
+
+# available hop
+actionHops = [[2,2], [2,-2], [-2,2], [-2,-2], [4,0], [-4,0]]
+
+print( agentFinalPos )
 class Check():
 
     def __init__(self, pos):
         self.pos = pos
         self.moveable = False
+        self.ended = False
 
     def getPosition(self) :
         return self.pos
+
+    def move(self, pos) :
+        self.pos = pos
 
     def isMoveable(self) :
         return self.moveable
@@ -33,8 +63,17 @@ class Check():
     def setMoveable(self, flag) :
         self.moveable = flag
 
+    def setEnded(self):
+        self.ended = True
+
+    def isEnded(self):
+        return self.ended
+
     def __str__(self) :
         return "Check at " + str( self.pos )
+        # + '\tisMoveable=' + str( self.moveable )
+
+
 
 
 
