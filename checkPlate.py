@@ -16,3 +16,25 @@ legalPos = [                                                [13, 1],
                                                         [12,16],[14,16],
                                                             [13,17]
             ]
+
+
+class Check():
+
+    def __init__(self, pos):
+        self.pos = pos
+        self.moveable = False
+
+    def getPosition(self) :
+        return self.pos
+
+    def isMoveable(self) :
+        return self.moveable
+
+    def setMoveable(self, flag) :
+        self.moveable = flag
+
+    def __str__(self) :
+        return "Check at " + str( self.pos )
+
+
+
