@@ -76,7 +76,6 @@ class Check():
 
     def printout(self) :
         return "%s Move From %s to %s." % ( self.name, str( self.initPos ), str( self.pos ) )
-        # + '\tisMoveable=' + str( self.moveable )
 
 
 

@@ -64,8 +64,9 @@ def selectChecker() :
 def moveChecker( checker ) :
     for i in range( len(agentFinalPos) ) :
         if not hasCheck[ legalPos.index( agentFinalPos[i] ) ] and not checker.isEnded():
-            print( 'Destination:', agentFinalPos[i] )
-            print( 'Before Move Next:', checker, '\n' )
+            # print( 'Destination:', agentFinalPos[i] )
+            before = checker.pos
+            # print( 'Before Move Next:', checker, '\n' )
 
             moveCheck = []
             vectorFinal = minus( agentFinalPos[i], checker.pos )
@@ -76,16 +77,17 @@ def moveChecker( checker ) :
 
             hasCheck[ legalPos.index( checker.pos ) ] = False
             if not moveCheck :
-                return
+                return False
             checker.move( moveCheck[0] )
             setMoveable()
             hasCheck[ legalPos.index( checker.pos ) ] = True
-            print( 'After Moving:', checker )
+            after = checker.pos
+            print( '%s; %s' % ( str(before), str(after) ) )
             print( '-----------------------------------------' )
 
             if checker.pos == agentFinalPos[i] :
                 checker.setEnded()
-            return
+            return True
 
 def checkersIsFinished() :
     return all( hasCheck[ legalPos.index(finalPos)] for finalPos in agentFinalPos )
@@ -103,9 +105,9 @@ if __name__ == '__main__':
         f.writelines( str( hasCheck ) + '\n' )
         count = 0
         while not checkersIsFinished() :
-            moveChecker( selectChecker() )
-            time.sleep( 0.2 )
-            count += 1
+            if moveChecker( selectChecker() ) :
+                count += 1
+            time.sleep( 0.1 )
 
         f.writelines( '--------------------------------\n' )
         f.writelines( str( hasCheck ) + '\n' )
