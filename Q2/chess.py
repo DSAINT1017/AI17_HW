@@ -75,9 +75,9 @@ def moveChecker( checker ) :
                 if moveWay( vectorMove, vectorFinal ) :
                     moveCheck.append( item )
 
-            hasCheck[ legalPos.index( checker.pos ) ] = False
             if not moveCheck :
                 return False
+            hasCheck[ legalPos.index( checker.pos ) ] = False
             checker.move( moveCheck[0] )
             setMoveable()
             hasCheck[ legalPos.index( checker.pos ) ] = True

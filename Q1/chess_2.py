@@ -1,6 +1,7 @@
-from checkPlate import *
+from checkPlate_2 import *
 from random import randint
 import time
+import math
 
 Checkers = []
 
@@ -13,8 +14,6 @@ def nowPositions( checkerPositions ) :
     hasCheck = [False] * len( legalPos )
     if all( pos in legalPos for pos in checkerPositions ) :
         for check in checkerPositions :
-            hasCheck[ legalPos.index( check ) ] = True
-        for check in obstacle :
             hasCheck[ legalPos.index( check ) ] = True
     return hasCheck
 
@@ -30,6 +29,20 @@ def moveWay( x, y ):
     # print( x, y )
     return ( ( x[0] * y[0] ) >= 0 and ( x[1] * y[1] ) >= 0 )
 
+def getDistance( position, finalPos ) :
+    x2 = math.pow( (position[0] - finalPos[0]), 2 )
+    y2 = math.pow( (position[1] - finalPos[1]), 2 )
+    return math.sqrt( x2 + y2 )
+
+def getLowDistCheck( positions, finalPos ) :
+    dis = 99999
+
+    for position in positions :
+        if dis > getDistance( position, finalPos ) :
+            dis = getDistance( position, finalPos )
+            nearest = position
+    return nearest
+
 
 def getMoveSpace( checker ) :
     space = list()
@@ -44,8 +57,10 @@ def getMoveSpace( checker ) :
                     space.append( add( checker, actionHops[i] ) )
                 else :
                     pass
-        except :
+        except Exception as e :
+            # print( type(e), e )
             pass
+
     return space
 
 
@@ -66,19 +81,11 @@ def selectChecker() :
 def moveChecker( checker ) :
     for i in range( len(agentFinalPos) ) :
         if not hasCheck[ legalPos.index( agentFinalPos[i] ) ] and not checker.isEnded():
-            # print( 'Destination:', agentFinalPos[i] )
             before = checker.pos
-            # print( 'Before Move Next:', checker, '\n' )
 
             moveCheck = []
             vectorFinal = minus( agentFinalPos[i], checker.pos )
-            for item in getMoveSpace( checker.pos ) :
-                vectorMove = minus( item, checker.pos )
-                if moveWay( vectorMove, vectorFinal ) :
-                    moveCheck.append( item )
-
-            if not moveCheck :
-                return False
+            moveCheck.append( getLowDistCheck(getMoveSpace(checker.pos), agentFinalPos[i] ) )
             hasCheck[ legalPos.index( checker.pos ) ] = False
             checker.move( moveCheck[0] )
             setMoveable()
@@ -102,8 +109,6 @@ def testChecker() :
 
 if __name__ == '__main__':
 
-    # testCheck = [12, 16]
-    # print( getMoveSpace( testCheck, hasCheck ) )
     setMoveable()
     with open( 'status.txt', 'w+', encoding='UTF-8' ) as f :
         f.writelines( str( hasCheck ) + '\n' )
@@ -115,7 +120,6 @@ if __name__ == '__main__':
 
         f.writelines( '--------------------------------\n' )
         f.writelines( str( hasCheck ) + '\n' )
-
 
     print( 'Total move:', str( count ) )
     print("")
