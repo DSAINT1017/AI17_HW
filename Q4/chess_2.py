@@ -47,10 +47,8 @@ def getLowDistCheck( positions, finalPos ) :
 def getMoveSpace( checker ) :
     space = list()
     for i in range( len( actionMoves ) ) :
-        # print( actionMoves[i], actionHops[i] )
         try :
             posMove = add( checker, actionMoves[i] )
-            # print( "Move", posMove, i, actionMoves[i] )
             if not hasCheck[ legalPos.index( posMove ) ] :
                 space.append( posMove )
             else :
@@ -96,7 +94,7 @@ def moveChecker( checker ) :
             hasCheck[ legalPos.index( checker.pos ) ] = True
             after = checker.pos
             print( '%s; %s' % ( str(before), str(after) ) )
-            print( '-----------------------------------------' )
+            # print( '-----------------------------------------' )
 
             if checker.pos == agentFinalPos[i] :
                 checker.setEnded()
@@ -128,8 +126,8 @@ if __name__ == '__main__':
         f.writelines( str( hasCheck ) + '\n' )
 
     print( 'Total move:', str( count ) )
-    print("")
-    testChecker()
+    # print("")
+    # testChecker()
 
 
 

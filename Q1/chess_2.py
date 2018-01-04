@@ -92,7 +92,7 @@ def moveChecker( checker ) :
             hasCheck[ legalPos.index( checker.pos ) ] = True
             after = checker.pos
             print( '%s; %s' % ( str(before), str(after) ) )
-            print( '-----------------------------------------' )
+            # print( '-----------------------------------------' )
 
             if checker.pos == agentFinalPos[i] :
                 checker.setEnded()
@@ -122,8 +122,8 @@ if __name__ == '__main__':
         f.writelines( str( hasCheck ) + '\n' )
 
     print( 'Total move:', str( count ) )
-    print("")
-    testChecker()
+    # print("")
+    # testChecker()
 
 
 
