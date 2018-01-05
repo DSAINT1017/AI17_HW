@@ -15,10 +15,13 @@ def nowPositions( checkerPositions ) :
     if all( pos in legalPos for pos in checkerPositions ) :
         for check in checkerPositions :
             hasCheck[ legalPos.index( check ) ] = True
+    if all( pos in legalPos for pos in obstacle ) :
+        for check in obstacle:
+            hasCheck[ legalPos.index( check ) ] = True
     return hasCheck
 
 hasCheck = nowPositions( agentStartPos )
-
+print( hasCheck )
 def add( x, y ) :
     return [ x[0]+y[0], x[1]+y[1] ]
 
@@ -109,7 +112,8 @@ def testChecker() :
 
 
 if __name__ == '__main__':
-
+    print( getMoveSpace( [1,-3] ) )
+    time.sleep(10)
     setMoveable()
     with open( 'status.txt', 'w+', encoding='UTF-8' ) as f :
         f.writelines( str( hasCheck ) + '\n' )
